@@ -19,7 +19,7 @@ const useOrderBookWs = () => {
     lastJsonMessage: data,
   } = useWebSocket(WS_URL, {
     share: false,
-    // shouldReconnect: () => true,
+    shouldReconnect: () => true,
   })
 
   useEffect(() => {
@@ -59,10 +59,13 @@ const separateColumns = (data = []) => {
 function App() {
   useOrderBookWs()
 
-  const orders = useSelector(({ orders }) => orders)
-  // const orders = useSelector(({ orders }) =>
-  //   orders.filter(([_, count]) => count !== 0),
-  // )
+  // const orders = useSelector(({ orders }) => orders)
+
+  // hacking the removal of  orders FYI 'Removed' orders are still
+  // kept in the store
+  const orders = useSelector(({ orders }) =>
+    orders.filter(([_, count]) => count !== 0),
+  )
 
   const [buys, sells] = separateColumns(orders)
 

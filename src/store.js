@@ -6,7 +6,7 @@ const ordersSlice = createSlice({
   initialState: [],
   reducers: {
     initOrdersSnapshot: (state, action) => {
-      state = action.payload
+      return action.payload
     },
     updateOrder(state, action) {
       const { payload: order } = action
@@ -18,11 +18,15 @@ const ordersSlice = createSlice({
       if (index === -1) {
         state.push(order)
       } else {
-        if (order[orderKeys.COUNT] === 0) {
-          state.splice(index, 1)
-        } else {
-          state.splice(index, 1, order)
-        }
+        // This throws an error about updating state which I couldn't figure
+        // out and ran out of time trying to get to the bottom of
+        // if (order[orderKeys.COUNT] === 0) {
+        //   state.splice(index, 1)
+        // } else {
+        //   state.splice(index, 1, order)
+        // }
+
+        state.splice(index, 1, order)
       }
     },
   },
